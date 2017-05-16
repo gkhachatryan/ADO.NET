@@ -13,26 +13,21 @@
 
         <StackPanel Margin="2"  Grid.Row="0" Orientation="Horizontal">
             <Button Name="Get_All_PersonBt" Margin="5, 3, 10, 3" Padding="2" Click="Get_All_PersonBt_Click"  >Get All Person</Button>
-            <Button Name="Get_By_IdBt" Margin="5, 3, 10, 3" Padding="2" >Get Person By Id</Button>
+            <Button Name="Get_By_IdBt" Margin="5, 3, 10, 3" Padding="2" Click="Get_By_IdBt_Click" >Get Person By ID</Button>
             <TextBox Name="GetIDTxBox" Margin="5, 3, 10, 3" Padding="2" Width="50" VerticalAlignment="Center" >ID</TextBox>
         </StackPanel>
-
-        <ListBox Name="listOfPersons" 
-                 Grid.Row="1"
-                 Height="auto" 
-                 Margin="5">
-        </ListBox>
+       
 
         <StackPanel Margin="2"  Grid.Row="2" Orientation="Horizontal">
-            <TextBox  Name="NameTxBox" Margin="5, 3, 10, 3" Padding="2" Width="170" VerticalAlignment="Center" >Name</TextBox>
-            <TextBox Name="SurnametxtBox" Margin="5, 3, 10, 3" Padding="2" Width="170" VerticalAlignment="Center" >Surname</TextBox>
+            <TextBox  Name="FNameTxBox" Margin="5, 3, 10, 3" Padding="2" Width="170" VerticalAlignment="Center" >FName</TextBox>
+            <TextBox Name="LNametxtBox" Margin="5, 3, 10, 3" Padding="2" Width="170" VerticalAlignment="Center" >LName</TextBox>
             <TextBox Name="PhonetxBox" Margin="5, 3, 10, 3" Padding="2" Width="50" VerticalAlignment="Center" >Phone</TextBox>
         </StackPanel>
 
         <StackPanel Margin="2"  Grid.Row="3" Orientation="Horizontal">
-            <Button Name="AddNewBt" Margin="5, 3, 10, 3" Padding="2" >Add New Person</Button>
-            <Button Name="UpdateBt" Margin="5, 3, 10, 3" Padding="2" >Update Person</Button>
-            <Button Name="DeleteBt" Margin="5, 3, 10, 3" Padding="2" Width="134" >Delete Selected Person</Button>
+            <Button Name="AddNewBt" Margin="5, 3, 10, 3" Padding="2" Click="AddNewBt_Click" >Add New Person</Button>
+            <Button Name="UpdateBt" Margin="5, 3, 10, 3" Padding="2" Click="UpdateBt_Click" >Update Person</Button>
+            <Button Name="DeleteBt" Margin="5, 3, 10, 3" Padding="2" Width="134" Click="DeleteBt_Click" >Delete Selected Person</Button>
           
         </StackPanel>
 

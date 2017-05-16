@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace MainWpf
 {
@@ -12,17 +13,19 @@ namespace MainWpf
         public List<Person> GetAllPersons()
         {
             string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+
             List<Person> persons = new List<Person>();
 
             using (SqlConnection connection = new SqlConnection(c))
             {
 
                 connection.Open();
-                Console.WriteLine(connection.State);
+                // Console.WriteLine(connection.State);
 
                 SqlDataReader reader = null;
 
                 SqlCommand command = new SqlCommand("SELECT * FROM Person", connection);
+
                 try
                 {
                     reader = command.ExecuteReader();
@@ -38,10 +41,12 @@ namespace MainWpf
                         persons.Add(per);
                     }
                 }
+
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+
                 finally
                 {
                     reader.Close();
@@ -49,6 +54,114 @@ namespace MainWpf
             }
 
             return persons;
+        }
+
+
+        public Person GetByID(int id)
+        {
+            Person person = null;
+
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(c))
+            {
+                connection.Open();
+
+                SqlDataReader reader = null;
+
+                SqlCommand command = new SqlCommand("SELECT * FROM Person where Id=@id", connection);
+
+                command.Parameters.AddWithValue("id", id);
+
+                try
+                {
+                    reader = command.ExecuteReader();
+                    reader.Read();
+                    person = new Person()
+                    {
+                        Id = (int)reader[0],
+                        FName = reader[1].ToString(),
+                        LName = reader[2].ToString(),
+                        Phone = (int)reader[3]
+                    };
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                finally
+                {
+                    if (reader != null)
+                    {
+                        reader.Close();
+                    }
+                }
+
+                return person;
+            }
+        }
+
+
+        public void Update(Person person)
+        {
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(c))
+            {
+                SqlCommand command = new SqlCommand("Update Person Set FName=@FName, LName=@LName, Phone=@Phone where Id=@id", connection);
+
+                command.Parameters.AddWithValue("id", person.Id);
+
+                command.Parameters.AddWithValue("FName", person.FName);
+
+                command.Parameters.AddWithValue("LName", person.LName);
+
+                command.Parameters.AddWithValue("Phone", person.Phone);
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+            }
+
+        }
+
+        public void Delete(int id)
+        {
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(c))
+            {
+                SqlCommand command = new SqlCommand("Delet fromPerson where Id = @id", connection);
+
+                command.Parameters.AddWithValue("id", id);
+               
+                connection.Open();
+                
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Add(Person person)
+        {
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+
+            using (SqlConnection connection = new SqlConnection(c))
+            {
+                SqlCommand command = new SqlCommand( "Insert into Person values (@FName, @LName, @Phone) ", connection);
+
+                command.Parameters.AddWithValue("FName", person.FName);
+
+                command.Parameters.AddWithValue("LName", person.LName);
+
+                command.Parameters.AddWithValue("Phone", person.Phone);
+
+                connection.Open();
+
+                command.ExecuteNonQuery();
+            }
+
         }
     }
 }
