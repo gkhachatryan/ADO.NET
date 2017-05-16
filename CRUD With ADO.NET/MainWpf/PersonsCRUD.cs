@@ -52,7 +52,6 @@ namespace MainWpf
                     reader.Close();
                 }
             }
-
             return persons;
         }
 
