@@ -12,7 +12,7 @@ namespace MainWpf
     {
         public List<Person> GetAllPersons()
         {
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             List<Person> persons = new List<Person>();
 
@@ -61,7 +61,7 @@ namespace MainWpf
         {
             Person person = null;
 
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             using (SqlConnection connection = new SqlConnection(c))
             {
@@ -106,7 +106,7 @@ namespace MainWpf
 
         public void Update(Person person)
         {
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             using (SqlConnection connection = new SqlConnection(c))
             {
@@ -129,27 +129,27 @@ namespace MainWpf
 
         public void Delete(int id)
         {
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             using (SqlConnection connection = new SqlConnection(c))
             {
-                SqlCommand command = new SqlCommand("Delet fromPerson where Id = @id", connection);
+                SqlCommand command = new SqlCommand("Delete from Person where Id = @id", connection);
 
                 command.Parameters.AddWithValue("id", id);
-               
+
                 connection.Open();
-                
+
                 command.ExecuteNonQuery();
             }
         }
 
         public void Add(Person person)
         {
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\LocalDB\LocalDB\LocalDB.mdf; Integrated Security=True";
+            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             using (SqlConnection connection = new SqlConnection(c))
             {
-                SqlCommand command = new SqlCommand( "Insert into Person values (@FName, @LName, @Phone) ", connection);
+                SqlCommand command = new SqlCommand("Insert into Person (FName, LName, Phone) values (@FName, @LName, @Phone) ", connection);
 
                 command.Parameters.AddWithValue("FName", person.FName);
 
