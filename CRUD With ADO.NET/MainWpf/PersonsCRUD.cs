@@ -12,23 +12,27 @@ namespace MainWpf
     {
         public List<Person> GetAllPersons()
         {
-            string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
+            // string c = @"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True";
 
             List<Person> persons = new List<Person>();
 
-            using (SqlConnection connection = new SqlConnection(c))
+            using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\v11.0; AttachDbFilename=C:\Users\PC\Documents\Visual Studio 2013\Projects\BetConstruct\MainWpf\MainWpf\PersonsDatabase.mdf; Integrated Security=True"))
             {
 
                 connection.Open();
-                // Console.WriteLine(connection.State);
 
                 SqlDataReader reader = null;
 
                 SqlCommand command = new SqlCommand("SELECT * FROM Person", connection);
 
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                command.Transaction = transaction;
+
                 try
                 {
                     reader = command.ExecuteReader();
+
                     while (reader.Read())
                     {
                         Person per = new Person()
@@ -40,11 +44,16 @@ namespace MainWpf
                         };
                         persons.Add(per);
                     }
+
+                    transaction.Commit();
+
                 }
 
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                  //  transaction.Rollback();
+
+                    MessageBox.Show(ex.Message);
                 }
 
                 finally
@@ -72,6 +81,10 @@ namespace MainWpf
 
                 command.Parameters.AddWithValue("id", id);
 
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                command.Transaction = transaction;
+
                 try
                 {
                     reader = command.ExecuteReader();
@@ -83,10 +96,14 @@ namespace MainWpf
                         LName = reader[2].ToString(),
                         Phone = (int)reader[3]
                     };
+
+                    transaction.Commit();
                 }
 
                 catch (Exception ex)
                 {
+                  //  transaction.Rollback();
+
                     MessageBox.Show(ex.Message);
                 }
 
